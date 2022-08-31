@@ -1,8 +1,9 @@
 package test
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 
 	core "k8s.io/api/core/v1"
 
@@ -17,7 +18,7 @@ func TestTemplateRenders(t *testing.T) {
 		SetValues: map[string]string{"image": "felixb/yocto-httpd:latest"},
 	}
 
-	renderedTemplate := helm.RenderTemplate(t, helmOptions, helmChartPath, []string{"templates/pod.yaml"})
+	renderedTemplate := helm.RenderTemplate(t, helmOptions, helmChartPath, "yocto-test", []string{"templates/pod.yaml"})
 
 	var pod core.Pod
 	helm.UnmarshalK8SYaml(t, renderedTemplate, &pod)
