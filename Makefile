@@ -1,15 +1,12 @@
-all: unittest integrationtest
+all: install unittest integrationtest clean
 
-fmt:
-	gofmt -s -w .
+k3d:
+	k3d cluster create yocto-terratest
 
-minikube:
-	minikube start -p yocto-terratest
+install: k3d
 
-tiller:
-	helm init --wait
-
-install: minikube tiller
+clean:
+	k3d cluster delete yocto-terratest
 
 unittest:
 	cd test/; go test -run ^TestTemplate
